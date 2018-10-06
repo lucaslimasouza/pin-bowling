@@ -10,4 +10,11 @@ RSpec.describe Pitch do
     end
   end
 
+  describe '#did_strike?' do
+    it 'is truthy when 10 pins was knocked down' do
+      pitch = build(:pitch_with_strike)
+      expect(pitch.did_strike?).to be_truthy
+    end
+  end
+
 end
