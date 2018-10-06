@@ -3,7 +3,8 @@ class Frame
   TOTAL_PITCHES_TO_SPARE = 2
   LAST_ID = 10
 
-  attr_reader :pitches, :score
+  attr_reader :pitches, :score, :id
+  attr_accessor :previous_frame
 
   def initialize(id:)
     @id = id

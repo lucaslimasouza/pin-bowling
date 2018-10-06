@@ -54,4 +54,16 @@ RSpec.describe Frame do
       expect(frame.last?).to be_truthy
     end
   end
+
+  describe '#previous_frame' do
+    it 'return a Frame with previous id' do
+      first_frame = build(:frame)
+      second_frame = build(:frame_two)
+      second_frame.previous_frame = first_frame
+      previous_frame = second_frame.previous_frame
+
+      expect(previous_frame).to eq first_frame
+      expect(previous_frame.id).to eq first_frame.id
+    end
+  end
 end
