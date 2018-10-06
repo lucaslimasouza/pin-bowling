@@ -3,7 +3,7 @@ class Frame
   TOTAL_PITCHES_TO_SPARE = 2
   LAST_ID = 10
 
-  attr_reader :pitches, :score, :id
+  attr_reader :pitches, :score, :id, :score
   attr_accessor :previous_frame
 
   def initialize(id:)
@@ -21,7 +21,7 @@ class Frame
   end
 
   def spare?
-    pitches.sum(&:pins_knocked_down) == 10 and pitches.size == TOTAL_PITCHES_TO_SPARE
+    total_pins_knocked_down == 10 and pitches.size == TOTAL_PITCHES_TO_SPARE
   end
 
   def closed?
@@ -32,11 +32,15 @@ class Frame
     @id = LAST_ID
   end
 
+  def score_with_plus(bonus)
+    @score = total_pins_knocked_down + bonus
+  end
+
   private
 
   def update_score
     need_update = has_two_pitches? && !has_score? && !strike? && !spare?
-    @score = pitches.sum(&:pins_knocked_down) if need_update
+    @score = total_pins_knocked_down if need_update
   end
 
   def has_score?
@@ -45,5 +49,9 @@ class Frame
 
   def has_two_pitches?
     pitches.size == 2
+  end
+
+  def total_pins_knocked_down
+    pitches.sum(&:pins_knocked_down)
   end
 end

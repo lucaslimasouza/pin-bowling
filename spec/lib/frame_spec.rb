@@ -66,4 +66,13 @@ RSpec.describe Frame do
       expect(previous_frame.id).to eq first_frame.id
     end
   end
+
+  describe '#score_with_plus' do
+    it 'set the score with bonus' do
+      subject.add_pitch build(:pitch_with_strike)
+      subject.score_with_plus(6)
+
+      expect(subject.score).to eq 16
+    end
+  end
 end
