@@ -1,6 +1,7 @@
 class Frame
   TOTAL_PITCHES_TO_STRKE = 1
   TOTAL_PITCHES_TO_SPARE = 2
+  LAST_ID = 10
 
   attr_reader :pitches, :score
 
@@ -24,6 +25,10 @@ class Frame
 
   def closed?
      has_two_pitches? && has_score?
+  end
+
+  def last?
+    @id = LAST_ID
   end
 
   private

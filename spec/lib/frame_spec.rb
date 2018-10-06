@@ -46,4 +46,12 @@ RSpec.describe Frame do
       expect(subject.score).to eq 8
     end
   end
+
+  describe '#last?' do
+    it 'is when has id equal 10' do
+      frame = build(:last_frame)
+
+      expect(frame.last?).to be_truthy
+    end
+  end
 end
