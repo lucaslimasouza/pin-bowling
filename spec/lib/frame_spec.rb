@@ -15,4 +15,12 @@ RSpec.describe Frame do
     end
   end
 
+  describe '#strike?' do
+    it 'is when first Pitch has 10 pins knocked down' do
+      subject.add_pitch build(:pitch, pins_knocked_down: 10)
+
+      expect(subject.strike?).to be_truthy
+    end
+  end
+
 end
