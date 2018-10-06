@@ -32,4 +32,11 @@ RSpec.describe Frame do
     end
   end
 
+  describe '#closed?' do
+    it 'is when has two Pitches' do
+      2.times { subject.add_pitch build(:pitch) }
+
+      expect(subject.closed?). to be_truthy
+    end
+  end
 end

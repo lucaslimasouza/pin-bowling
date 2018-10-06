@@ -21,4 +21,9 @@ class Frame
     pitches.sum(&:pins_knocked_down) == 10 and pitches.size == TOTAL_PITCHES_TO_SPARE
   end
 
+  def closed?
+    pitches.size == 2
+  end
+
+
 end
