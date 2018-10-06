@@ -33,6 +33,10 @@ class Frame
   end
 
   def score_with_plus(bonus)
+    if has_previous_frame?
+      @score = total_pins_knocked_down + bonus + previous_frame.score
+      return
+    end
     @score = total_pins_knocked_down + bonus
   end
 
@@ -41,7 +45,7 @@ class Frame
   def update_score
     need_update = has_two_pitches? && !has_score? && !strike? && !spare?
     if need_update
-      if !previous_frame.nil?
+      if has_previous_frame?
         @score = previous_frame.score + total_pins_knocked_down
         return
       end
@@ -59,5 +63,9 @@ class Frame
 
   def total_pins_knocked_down
     pitches.sum(&:pins_knocked_down)
+  end
+
+  def has_previous_frame?
+    !previous_frame.nil?
   end
 end

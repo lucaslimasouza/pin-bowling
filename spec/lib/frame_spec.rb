@@ -86,5 +86,20 @@ RSpec.describe Frame do
 
       expect(subject.score).to eq 16
     end
+
+    context 'previous frame' do
+      it 'set score with bonus plus previous frame score' do
+        previous_frame = build(:frame)
+        2.times { previous_frame.add_pitch build(:pitch) }
+
+        second_frame = build(:frame_two)
+        second_frame.add_pitch build(:pitch_with_strike)
+        second_frame.previous_frame = previous_frame
+
+        second_frame.score_with_plus(5)
+
+          expect(second_frame.score).to eq 23
+      end
+    end
   end
 end
