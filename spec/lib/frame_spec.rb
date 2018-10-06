@@ -38,5 +38,12 @@ RSpec.describe Frame do
 
       expect(subject.closed?). to be_truthy
     end
+
+    it 'is when has score' do
+      2.times { subject.add_pitch build(:pitch) }
+
+      expect(subject.closed?). to be_truthy
+      expect(subject.score).to eq 8
+    end
   end
 end

@@ -2,7 +2,7 @@ class Frame
   TOTAL_PITCHES_TO_STRKE = 1
   TOTAL_PITCHES_TO_SPARE = 2
 
-  attr_reader :pitches
+  attr_reader :pitches, :score
 
   def initialize(id:)
     @id = id
@@ -11,6 +11,7 @@ class Frame
 
   def add_pitch(pitch)
     pitches.push pitch
+    update_score
   end
 
   def strike?
@@ -22,8 +23,21 @@ class Frame
   end
 
   def closed?
-    pitches.size == 2
+     has_two_pitches? && has_score?
   end
 
+  private
 
+  def update_score
+    need_update = has_two_pitches? && !has_score? && !strike? && !spare?
+    @score = pitches.sum(&:pins_knocked_down) if need_update
+  end
+
+  def has_score?
+    !@score.nil?
+  end
+
+  def has_two_pitches?
+    pitches.size == 2
+  end
 end
