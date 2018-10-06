@@ -1,4 +1,7 @@
 class Frame
+  TOTAL_PITCHES_TO_STRKE = 1
+  TOTAL_PITCHES_TO_SPARE = 2
+
   attr_reader :pitches
 
   def initialize(id:)
@@ -11,7 +14,11 @@ class Frame
   end
 
   def strike?
-    pitches.size == 1 and pitches.first.did_strike?
+    pitches.size == TOTAL_PITCHES_TO_STRKE and pitches.first.did_strike?
+  end
+
+  def spare?
+    pitches.sum(&:pins_knocked_down) == 10 and pitches.size == TOTAL_PITCHES_TO_SPARE
   end
 
 end

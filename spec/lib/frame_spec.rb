@@ -23,4 +23,13 @@ RSpec.describe Frame do
     end
   end
 
+  describe '#spare?' do
+    it 'is when two Pitches sum 10 pins knocked down' do
+      subject.add_pitch build(:pitch)
+      subject.add_pitch build(:pitch_to_spare)
+
+      expect(subject.spare?).to be_truthy
+    end
+  end
+
 end
