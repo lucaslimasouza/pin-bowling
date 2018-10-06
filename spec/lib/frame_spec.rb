@@ -65,6 +65,18 @@ RSpec.describe Frame do
       expect(previous_frame).to eq first_frame
       expect(previous_frame.id).to eq first_frame.id
     end
+
+    context 'update score' do
+      it 'adding sum of pins knocked down, plus previous frame score' do
+        2.times { subject.add_pitch build(:pitch) }
+
+        second_frame = build(:frame_two)
+        second_frame.previous_frame = subject
+        2.times { second_frame.add_pitch build(:pitch) }
+
+        expect(second_frame.score).to eq 16
+      end
+    end
   end
 
   describe '#score_with_plus' do

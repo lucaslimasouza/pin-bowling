@@ -40,7 +40,13 @@ class Frame
 
   def update_score
     need_update = has_two_pitches? && !has_score? && !strike? && !spare?
-    @score = total_pins_knocked_down if need_update
+    if need_update
+      if !previous_frame.nil?
+        @score = previous_frame.score + total_pins_knocked_down
+        return
+      end
+      @score = total_pins_knocked_down
+    end
   end
 
   def has_score?
