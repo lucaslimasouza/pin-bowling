@@ -1,6 +1,4 @@
 class Frame
-  PINS_KNOCKED_DOWN_TO_STRIKE = 10
-
   attr_reader :pitches
 
   def initialize(id:)
@@ -13,7 +11,7 @@ class Frame
   end
 
   def strike?
-    pitches.size == 1 and pitches.first.pins_knocked_down == PINS_KNOCKED_DOWN_TO_STRIKE
+    pitches.size == 1 and pitches.first.did_strike?
   end
 
 end
