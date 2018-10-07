@@ -45,7 +45,7 @@ class Game
   end
 
   def add_last_pitch(pitch)
-    @last_pitches.push pitch unless pitch.did_strike?
+    @last_pitches.push pitch unless frames.empty?
   end
 
   def remove_from_queue_frame(pitch)
