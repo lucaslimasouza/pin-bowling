@@ -20,6 +20,12 @@ RSpec.describe ParserGames do
         expect(games.length).to eq 2
       end
 
+      it 'define a Frame in the last Game' do
+        games = subject.parse
+
+        expect(games.last.frames.length).to eq 1
+      end
+
     end
   end
 

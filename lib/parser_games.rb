@@ -13,6 +13,7 @@ class ParserGames
       pitch = create_pitch values
       player = create_player values
       game = find_or_create_game player
+      game.play pitch
     end
     games.values
   end
