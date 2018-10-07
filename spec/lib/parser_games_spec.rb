@@ -13,6 +13,13 @@ RSpec.describe ParserGames do
         expect(games).to be_an Array
         expect(games.first).to be_an Game
       end
+
+      it 'define 2 Games' do
+        games = subject.parse
+
+        expect(games.length).to eq 2
+      end
+
     end
   end
 
