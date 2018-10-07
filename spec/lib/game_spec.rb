@@ -86,6 +86,17 @@ RSpec.describe Game do
         end
       end
 
+      context 'tenth Frame with spare' do
+        it "wait one more Pitch to complete the scored" do
+          18.times { subject.play build(:pitch) }
+          subject.play build(:pitch)
+          subject.play build(:pitch_to_spare)
+          subject.play build(:pitch)
+
+          expect(subject.score).to eq 86
+        end
+      end
+
     end
   end
 end
