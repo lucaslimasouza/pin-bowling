@@ -26,6 +26,13 @@ RSpec.describe ParserGames do
         expect(games.last.frames.length).to eq 1
       end
 
+      it 'define Pitches to each Game' do
+        games = subject.parse
+
+        expect(games.first.frames.first.pitches.length).to eq 1
+        expect(games.last.frames.first.pitches.length).to eq 2
+      end
+
     end
   end
 
