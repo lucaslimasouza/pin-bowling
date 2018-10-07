@@ -18,9 +18,8 @@ module FramesManager
   end
 
   def frame_id
-    size = frames.size
-    return 1 if size == 0
-    size + 1
+    return 1 if frames.empty?
+    frames.size + 1
   end
 
   def is_frame_closed?(frame)
