@@ -6,7 +6,7 @@ RSpec.describe Frame do
   subject { build(:frame)}
 
   describe '#add_pitch' do
-    it 'add new pitch struct' do
+    it 'add new Pitch' do
       subject.add_pitch build(:pitch)
       pitches = subject.pitches
 
