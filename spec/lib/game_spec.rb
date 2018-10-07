@@ -50,7 +50,6 @@ RSpec.describe Game do
       context 'strike' do
         it 'is scored from last Frame' do
           subject.play build(:pitch_with_strike)
-
           2.times { subject.play build(:pitch) }
 
           expect(subject.score).to eq 26
@@ -60,10 +59,20 @@ RSpec.describe Game do
       context '2 sequential strikes' do
         it 'is scored from last Frame' do
           2.times { subject.play build(:pitch_with_strike) }
-
           2.times { subject.play build(:pitch) }
 
           expect(subject.score).to eq 50
+        end
+      end
+
+      context 'spare' do
+        it 'is scored from last Frame' do
+          subject.play build(:pitch)
+          subject.play build(:pitch_to_spare)
+
+          2.times { subject.play build(:pitch) }
+
+          expect(subject.score).to eq 22
         end
       end
 
