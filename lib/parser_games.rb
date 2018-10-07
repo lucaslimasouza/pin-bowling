@@ -1,5 +1,6 @@
 require 'pitch'
 require 'game'
+
 class ParserGames
 
   def initialize(file_path:)
@@ -8,12 +9,12 @@ class ParserGames
   end
 
   def parse
-    File.readlines(file_path).each do |row|
-      values = row.gsub(/\t|\n/, '')
-      pitch = create_pitch values
-      player = create_player values
-      game = find_or_create_game player
-      game.play pitch
+    begin
+      File.readlines(file_path).each do |row|
+        define_game row
+      end
+    rescue Errno::ENOENT => e
+      puts "Error on parse games => #{e}"
     end
     games.values
   end
@@ -21,6 +22,14 @@ class ParserGames
   private
 
   attr_reader :file_path, :games
+
+  def define_game(row)
+    values = row.gsub(/\t|\n/, '')
+    pitch = create_pitch values
+    player = create_player values
+    game = find_or_create_game player
+    game.play pitch
+  end
 
   def create_pitch(values)
     pins = values.split(' ')[1]
