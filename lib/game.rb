@@ -29,7 +29,7 @@ class Game
   end
 
   def update_score
-    @score += frames.last.score if frames.last.score
+    @score = frames.last.score if frames.last.score
   end
 
   def current_frame
@@ -38,7 +38,11 @@ class Game
 
     is_last_frame_closed = last_frame.strike? || last_frame.spare? || last_frame.closed?
 
-    return frame_klass.new(id: frame_id) if is_last_frame_closed
+    if is_last_frame_closed
+      new_frame = frame_klass.new(id: frame_id)
+      new_frame.previous_frame = last_frame
+      return new_frame
+    end
 
     last_frame
   end

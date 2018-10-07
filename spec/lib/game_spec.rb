@@ -28,12 +28,22 @@ RSpec.describe Game do
       expect(added_pitch).to eq pitch
     end
 
-    context 'define a score no strike and spare' do
-      context 'one frame' do
-        it "is sum of pins knocked down from Pitches" do
+    context 'define a score no bonus' do
+      context 'one Frame' do
+        it "is a score from last Frame" do
           2.times { subject.play build(:pitch) }
 
           expect(subject.score).to eq 8
+        end
+
+      end
+
+      context 'two Frames' do
+        it "is a score from last Frame" do
+          4.times { subject.play build(:pitch) }
+
+          expect(subject.score).to eq 16
+          expect(subject.frames.last.score).to eq 16
         end
 
       end
