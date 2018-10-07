@@ -29,7 +29,7 @@ class Frame
   end
 
   def last?
-    @id = LAST_ID
+    @id == LAST_ID
   end
 
   def score_with_plus(bonus)

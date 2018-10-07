@@ -4,11 +4,16 @@ module FramesManager
 
   def current_frame(frames)
     last_frame = frames.last
-
     return get_new_frame if last_frame.nil?
+    return last_frame if last_frame.last?
     return new_frame_with_previous(last_frame) if is_frame_closed?(last_frame)
 
     last_frame
+  end
+
+  def add_pitch_to_frame(frame, pitch)
+    return if frame.last? && (frame.strike? || frame.spare?)
+    frame.add_pitch pitch
   end
 
   private

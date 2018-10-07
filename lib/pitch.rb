@@ -1,4 +1,3 @@
-Pitch = Struct.new(:pins_knocked_down)
 class Pitch
   PINS_KNOCKED_DOWN_TO_STRIKE = 10
 

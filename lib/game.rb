@@ -21,7 +21,7 @@ class Game
 
     remove_from_queue(queue_frame_bonus, pitch)
     update_last_pitches pitch
-    frame.add_pitch pitch
+    add_pitch_to_frame(frame, pitch)
     update_frames frame
     add_to_queue(queue_frame_bonus, frame)
     update_score
