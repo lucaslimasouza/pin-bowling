@@ -1,5 +1,5 @@
-require 'pitch'
-require 'game'
+require_relative 'pitch'
+require_relative 'game'
 
 class ParserGames
   def initialize(file_path:)

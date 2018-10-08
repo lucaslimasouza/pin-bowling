@@ -1,4 +1,4 @@
-require 'frame'
+require './lib/frame'
 
 module FramesManager
   def current_frame(frames)
