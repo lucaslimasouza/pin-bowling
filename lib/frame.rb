@@ -41,10 +41,10 @@ class Frame
   end
 
   def print
-    return " |  #{pitches.first.print}" if strike?
-    return "#{pitches.first.print} | /" if spare?
+    return "|#{pitches.first.print}" if strike?
+    return "#{pitches.first.print}|/" if spare?
 
-    pitches.first.print + ' | ' + pitches.last.print
+    pitches.first.print + '|' + pitches.last.print
   end
 
   private

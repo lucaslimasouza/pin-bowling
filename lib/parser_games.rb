@@ -27,6 +27,8 @@ class ParserGames
     pitch = create_pitch values
     player = create_player values
     game = find_or_create_game player
+    return if game.ends?
+
     game.play pitch
   end
 

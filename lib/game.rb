@@ -27,8 +27,14 @@ class Game
 
   def print_bonus
     row = ''
-    last_pitches.each { |pitch| row += " #{pitch.print} |" }
+    last_pitches.each { |pitch| row += "#{pitch.print}\t|" }
     row
+  end
+
+  def ends?
+    return false if frames.empty?
+
+    frames.last.last? && score && queue_frame_bonus.empty?
   end
 
   private
