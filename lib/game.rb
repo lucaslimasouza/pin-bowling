@@ -17,7 +17,7 @@ class Game
 
   def play(pitch)
     frame = current_frame frames
-    remove_from_queue(queue_frame_bonus, pitch, last_pitches)
+    check_bonus(queue_frame_bonus, pitch, last_pitches)
     update_last_pitches pitch
     add_pitch_to_frame(frame, pitch)
     update_frames frame

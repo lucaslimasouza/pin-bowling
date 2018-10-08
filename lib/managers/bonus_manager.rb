@@ -7,15 +7,22 @@ module BonusManager
     pitches.push pitch
   end
 
-  def remove_from_queue(queue, pitch, last_pitches)
+  def check_bonus(queue, pitch, last_pitches)
     return if queue.empty?
 
     total_last_pitches = last_pitches + [pitch]
-    can_run_rules = can_run_strike_rule(queue, total_last_pitches) || can_run_spare_rule(queue, total_last_pitches)
-    set_bonus_to_frame(queue, total_last_pitches, last_pitches) if can_run_rules
+    if can_run_rules(queue, total_last_pitches)
+      frame = find_frame(frames, queue.first)
+      set_bonus_to_frame(frame, bonus(total_last_pitches))
+      clean_data(queue, last_pitches, total_last_pitches, frame)
+    end
   end
 
   private
+
+  def can_run_rules(queue, total_last_pitches)
+    can_run_strike_rule(queue, total_last_pitches) || can_run_spare_rule(queue, total_last_pitches)
+  end
 
   def can_run_strike_rule(queue, total_last_pitches)
     queue.first.strike? && total_last_pitches.size == 2
@@ -25,12 +32,21 @@ module BonusManager
     queue.first.spare? && total_last_pitches.size == 1
   end
 
-  def set_bonus_to_frame(queue, total_last_pitches, last_pitches)
-    bonus = total_last_pitches.sum(&:pins_knocked_down)
-    frame_with_bonus = frames[frames.index(queue.first)]
-    frame_with_bonus.score_with_plus bonus
+  def set_bonus_to_frame(frame, bonus)
+    frame.score_with_plus bonus
+  end
+
+  def find_frame(frames, frame)
+    frames.select { |f| f.id == frame.id }.first
+  end
+
+  def bonus(total_last_pitches)
+    total_last_pitches.sum(&:pins_knocked_down)
+  end
+
+  def clean_data(queue, last_pitches, total_last_pitches, frame)
     queue.shift
     last_pitches.pop
-    last_pitches.concat total_last_pitches if frame_with_bonus.last?
+    last_pitches.concat total_last_pitches if frame.last?
   end
 end
