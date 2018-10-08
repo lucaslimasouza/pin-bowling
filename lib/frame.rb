@@ -17,15 +17,15 @@ class Frame
   end
 
   def strike?
-    pitches.size == TOTAL_PITCHES_TO_STRKE and pitches.first.did_strike?
+    (pitches.size == TOTAL_PITCHES_TO_STRKE) && pitches.first.did_strike?
   end
 
   def spare?
-    total_pins_knocked_down == 10 and pitches.size == TOTAL_PITCHES_TO_SPARE
+    (total_pins_knocked_down == 10) && (pitches.size == TOTAL_PITCHES_TO_SPARE)
   end
 
   def closed?
-     has_two_pitches? && has_score?
+    has_two_pitches? && has_score?
   end
 
   def last?
@@ -43,7 +43,8 @@ class Frame
   def print
     return " |  #{pitches.first.print}" if strike?
     return "#{pitches.first.print} | /" if spare?
-    pitches.first.print + " | " + pitches.last.print
+
+    pitches.first.print + ' | ' + pitches.last.print
   end
 
   private
@@ -56,9 +57,7 @@ class Frame
       return
     end
 
-    if need_update
-      @score = total_pins_knocked_down
-    end
+    @score = total_pins_knocked_down if need_update
   end
 
   def has_score?

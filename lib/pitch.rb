@@ -12,8 +12,8 @@ class Pitch
   end
 
   def print
-    return "X" if did_strike?
+    return 'X' if did_strike?
+
     pins_knocked_down.to_s
   end
-
 end

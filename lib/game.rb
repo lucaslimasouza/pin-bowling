@@ -2,7 +2,6 @@ require_relative 'managers/frames_manager'
 require_relative 'managers/bonus_manager'
 
 class Game
-
   include FramesManager
   include BonusManager
 
@@ -18,13 +17,18 @@ class Game
 
   def play(pitch)
     frame = current_frame frames
-
-    remove_from_queue(queue_frame_bonus, pitch)
+    remove_from_queue(queue_frame_bonus, pitch, last_pitches)
     update_last_pitches pitch
     add_pitch_to_frame(frame, pitch)
     update_frames frame
     add_to_queue(queue_frame_bonus, frame)
     update_score
+  end
+
+  def print_bonus
+    row = ''
+    last_pitches.each { |pitch| row += " #{pitch.print} |" }
+    row
   end
 
   private

@@ -3,7 +3,7 @@ require 'parser_games'
 require 'game'
 
 RSpec.describe ParserGames do
-  subject { build(:parser_games)}
+  subject { build(:parser_games) }
 
   describe '#parse' do
     context 'load all bowling game from txt file' do
@@ -32,9 +32,6 @@ RSpec.describe ParserGames do
         expect(games.first.frames.first.pitches.length).to eq 1
         expect(games.last.frames.first.pitches.length).to eq 2
       end
-
     end
   end
-
-
 end

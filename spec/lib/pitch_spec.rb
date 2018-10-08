@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'pitch'
 
 RSpec.describe Pitch do
-  subject { build(:pitch)}
+  subject { build(:pitch) }
 
   describe '#pins_knocked_down' do
     it 'has pins knocked down value' do
@@ -16,5 +16,4 @@ RSpec.describe Pitch do
       expect(pitch.did_strike?).to be_truthy
     end
   end
-
 end

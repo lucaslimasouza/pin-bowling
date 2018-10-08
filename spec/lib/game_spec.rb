@@ -3,7 +3,7 @@ require 'game'
 require 'pitch'
 
 RSpec.describe Game do
-  subject { build(:game)}
+  subject { build(:game) }
 
   describe '#player' do
     it 'has the name of player' do
@@ -12,7 +12,7 @@ RSpec.describe Game do
   end
 
   describe '#play' do
-    it "adds an new Frame" do
+    it 'adds an new Frame' do
       pitch = build(:pitch)
       subject.play pitch
 
@@ -20,7 +20,7 @@ RSpec.describe Game do
       expect(subject.frames.first.id).to eq 1
     end
 
-    it "adds a Pitch in new Frame" do
+    it 'adds a Pitch in new Frame' do
       pitch = build(:pitch)
       subject.play pitch
       added_pitch = subject.frames.first.pitches.first
@@ -30,7 +30,7 @@ RSpec.describe Game do
 
     context 'define score no bonus' do
       context 'one Frame' do
-        it "is scored from last Frame" do
+        it 'is scored from last Frame' do
           2.times { subject.play build(:pitch) }
 
           expect(subject.score).to eq 8
@@ -38,7 +38,7 @@ RSpec.describe Game do
       end
 
       context 'two Frames' do
-        it "is scored from last Frame" do
+        it 'is scored from last Frame' do
           4.times { subject.play build(:pitch) }
 
           expect(subject.score).to eq 16
@@ -77,7 +77,7 @@ RSpec.describe Game do
       end
 
       context 'tenth Frame with strike' do
-        it "wait two more Pitches to complete the score of the strike" do
+        it 'wait two more Pitches to complete the score of the strike' do
           18.times { subject.play build(:pitch) }
           subject.play build(:pitch_with_strike)
           2.times { subject.play build(:pitch) }
@@ -87,7 +87,7 @@ RSpec.describe Game do
       end
 
       context 'tenth Frame with spare' do
-        it "wait one more Pitch to complete the scored" do
+        it 'wait one more Pitch to complete the scored' do
           18.times { subject.play build(:pitch) }
           subject.play build(:pitch)
           subject.play build(:pitch_to_spare)
@@ -98,7 +98,7 @@ RSpec.describe Game do
       end
 
       context 'all Frames with strike' do
-        it "wait two more Pitch to complete the scored" do
+        it 'wait two more Pitch to complete the scored' do
           12.times { subject.play build(:pitch_with_strike) }
 
           expect(subject.score).to eq 300
@@ -106,7 +106,7 @@ RSpec.describe Game do
       end
 
       context 'all Frames with spare' do
-        it "wait one more Pitch to complete the scored" do
+        it 'wait one more Pitch to complete the scored' do
           10.times do
             subject.play build(:pitch)
             subject.play build(:pitch_to_spare)
@@ -116,7 +116,6 @@ RSpec.describe Game do
           expect(subject.score).to eq 140
         end
       end
-
     end
   end
 end

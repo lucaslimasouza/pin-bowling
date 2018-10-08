@@ -2,7 +2,6 @@ require 'pitch'
 require 'game'
 
 class ParserGames
-
   def initialize(file_path:)
     @file_path = file_path
     @games = {}

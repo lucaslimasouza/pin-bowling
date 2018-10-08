@@ -3,7 +3,7 @@ require 'frame'
 require 'pitch'
 
 RSpec.describe Frame do
-  subject { build(:frame)}
+  subject { build(:frame) }
 
   describe '#add_pitch' do
     it 'add new Pitch' do
@@ -98,7 +98,7 @@ RSpec.describe Frame do
 
         second_frame.score_with_plus(5)
 
-          expect(second_frame.score).to eq 23
+        expect(second_frame.score).to eq 23
       end
     end
   end

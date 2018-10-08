@@ -1,18 +1,18 @@
 module BonusManager
-
-  def add_to_queue(queue,frame)
-    queue.push frame if frame.strike? || frame.spare?
+  def add_to_queue(queue, frame)
+    queue.push frame if (frame.strike? || frame.spare?) && !queue.include?(frame)
   end
 
   def add_current_pitch(pitches, pitch)
     pitches.push pitch
   end
 
-  def remove_from_queue(queue, pitch)
+  def remove_from_queue(queue, pitch, last_pitches)
     return if queue.empty?
+
     total_last_pitches = last_pitches + [pitch]
     can_run_rules = can_run_strike_rule(queue, total_last_pitches) || can_run_spare_rule(queue, total_last_pitches)
-    set_bonus_to_frame(queue, total_last_pitches) if can_run_rules
+    set_bonus_to_frame(queue, total_last_pitches, last_pitches) if can_run_rules
   end
 
   private
@@ -25,12 +25,12 @@ module BonusManager
     queue.first.spare? && total_last_pitches.size == 1
   end
 
-  def set_bonus_to_frame(queue, total_last_pitches)
+  def set_bonus_to_frame(queue, total_last_pitches, last_pitches)
     bonus = total_last_pitches.sum(&:pins_knocked_down)
     frame_with_bonus = frames[frames.index(queue.first)]
     frame_with_bonus.score_with_plus bonus
     queue.shift
     last_pitches.pop
+    last_pitches.concat total_last_pitches if frame_with_bonus.last?
   end
-
 end
