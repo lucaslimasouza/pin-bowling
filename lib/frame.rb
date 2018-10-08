@@ -40,6 +40,12 @@ class Frame
     @score = total_pins_knocked_down + bonus
   end
 
+  def print
+    return " |  #{pitches.first.print}" if strike?
+    return "#{pitches.first.print} | /" if spare?
+    pitches.first.print + " | " + pitches.last.print
+  end
+
   private
 
   def update_score
