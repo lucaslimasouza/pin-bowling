@@ -1,51 +1,82 @@
-module BonusManager
-  def add_to_queue(queue, frame)
-    queue.push frame if (frame.strike? || frame.spare?) && !queue.include?(frame)
+class BonusManager
+  attr_reader :frames
+
+  def initialize
+    @queue_of_frames = []
+    @last_pitches = []
+    @frames = []
   end
 
-  def add_current_pitch(pitches, pitch)
-    pitches.push pitch
-  end
+  def check_bonus(pitch)
+    return if queue_of_frames.empty?
 
-  def check_bonus(queue, pitch, last_pitches)
-    return if queue.empty?
+    @current_pitch = pitch
 
-    total_last_pitches = last_pitches + [pitch]
-    if can_run_rules(queue, total_last_pitches)
-      frame = find_frame(frames, queue.first)
-      set_bonus_to_frame(frame, bonus(total_last_pitches))
-      clean_data(queue, last_pitches, total_last_pitches, frame)
+    if can_run_rules
+      frame = find_frame
+      set_bonus_to_frame frame
+      clean_data frame
     end
+  end
+
+  def update_pitches(pitch)
+    last_pitches.push pitch unless queue_of_frames.empty?
+  end
+
+  def add_to_queue(frame)
+    queue_of_frames.push frame if (frame.strike? || frame.spare?) && !queue_of_frames.include?(frame)
+  end
+
+  def empty?
+    queue_of_frames.empty?
+  end
+
+  def add_frame(frame)
+    frames.push frame
+  end
+
+  def print
+    row = ''
+    last_pitches.each { |pitch| row += "#{pitch.print}\t|" }
+    row
   end
 
   private
 
-  def can_run_rules(queue, total_last_pitches)
-    can_run_strike_rule(queue, total_last_pitches) || can_run_spare_rule(queue, total_last_pitches)
+  attr_reader :last_pitches, :queue_of_frames, :current_pitch
+
+  def pitches_to_bonus
+    last_pitches + [current_pitch]
   end
 
-  def can_run_strike_rule(queue, total_last_pitches)
-    queue.first.strike? && total_last_pitches.size == 2
+  def can_run_rules
+    can_run_strike_rule || can_run_spare_rule
   end
 
-  def can_run_spare_rule(queue, total_last_pitches)
-    queue.first.spare? && total_last_pitches.size == 1
+  def can_run_strike_rule
+    queue_of_frames.first.strike? && pitches_to_bonus.size == 2
   end
 
-  def set_bonus_to_frame(frame, bonus)
+  def can_run_spare_rule
+    queue_of_frames.first.spare? && pitches_to_bonus.size == 1
+  end
+
+  def set_bonus_to_frame(frame)
     frame.score_with_plus bonus
   end
 
-  def find_frame(frames, frame)
+  def find_frame
+    frame = queue_of_frames.first
     frames.select { |f| f.id == frame.id }.first
   end
 
-  def bonus(total_last_pitches)
-    total_last_pitches.sum(&:pins_knocked_down)
+  def bonus
+    pitches_to_bonus.sum(&:pins_knocked_down)
   end
 
-  def clean_data(queue, last_pitches, total_last_pitches, frame)
-    queue.shift
+  def clean_data(frame)
+    total_last_pitches = pitches_to_bonus
+    queue_of_frames.shift
     last_pitches.pop
     last_pitches.concat total_last_pitches if frame.last?
   end

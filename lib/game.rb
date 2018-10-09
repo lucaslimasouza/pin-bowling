@@ -3,53 +3,49 @@ require_relative 'managers/bonus_manager'
 
 class Game
   include FramesManager
-  include BonusManager
 
   attr_reader :player, :frames, :score
 
-  def initialize(player:)
+  def initialize(player:, bonus_manager: BonusManager.new)
     @player = player
     @frames = []
     @score = 0
-    @queue_frame_bonus = []
-    @last_pitches = []
+    @bonus = bonus_manager
   end
 
   def play(pitch)
     frame = current_frame frames
-    check_bonus(queue_frame_bonus, pitch, last_pitches)
-    update_last_pitches pitch
+
+    bonus.check_bonus pitch
+    bonus.update_pitches pitch
     add_pitch_to_frame(frame, pitch)
+    bonus.add_to_queue frame
     update_frames frame
-    add_to_queue(queue_frame_bonus, frame)
     update_score
   end
 
   def print_bonus
-    row = ''
-    last_pitches.each { |pitch| row += "#{pitch.print}\t|" }
-    row
+    bonus.print
   end
 
   def ends?
     return false if frames.empty?
 
-    frames.last.last? && score && queue_frame_bonus.empty?
+    frames.last.last? && score && bonus.empty?
   end
 
   private
 
-  attr_reader :queue_frame_bonus, :last_pitches
+  attr_reader :bonus
 
   def update_score
     @score = frames.last.score if frames.last.score
   end
 
-  def update_last_pitches(pitch)
-    add_current_pitch(last_pitches, pitch) unless queue_frame_bonus.empty?
-  end
-
   def update_frames(frame)
-    frames.push frame unless frames.include? frame
+    unless frames.include? frame
+      frames.push frame
+      bonus.add_frame frame
+    end
   end
 end
