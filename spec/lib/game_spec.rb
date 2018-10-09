@@ -1,6 +1,7 @@
 require 'spec_helper'
 require 'game'
 require 'pitch'
+require 'managers/bonus_manager'
 
 RSpec.describe Game do
   subject { build(:game) }

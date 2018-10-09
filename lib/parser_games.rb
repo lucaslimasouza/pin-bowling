@@ -1,5 +1,6 @@
 require_relative 'pitch'
 require_relative 'game'
+require_relative 'managers/bonus_manager'
 
 class ParserGames
   def initialize(file_path:)
@@ -41,8 +42,14 @@ class ParserGames
     values.split(' ')[0]
   end
 
+  def bonus_manager
+    BonusManager.new
+  end
+
   def find_or_create_game(player)
-    games[player] = Game.new(player: player) unless games.key? player
+    unless games.key? player
+      games[player] = Game.new(player: player, bonus_manager: bonus_manager)
+    end
     games[player]
   end
 end

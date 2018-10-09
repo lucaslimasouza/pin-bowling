@@ -1,12 +1,11 @@
 require_relative 'managers/frames_manager'
-require_relative 'managers/bonus_manager'
 
 class Game
   include FramesManager
 
   attr_reader :player, :frames, :score
 
-  def initialize(player:, bonus_manager: BonusManager.new)
+  def initialize(player:, bonus_manager:)
     @player = player
     @frames = []
     @score = 0
